@@ -50,10 +50,11 @@ function JobList() {
   }
 
   function updateJobStatus(index, e){
+    const newStatus = e.target.value;
     if (newStatus === "status"){
       alert("Status value cannot be (status)");
       return
-    }
+    } 
     const updatedJobs = [...jobs];
     updatedJobs[index].Status = e.target.value;
     setJobs(updatedJobs);
@@ -90,7 +91,7 @@ function JobList() {
         <input
           type="text"
           className="Job_input"
-          placeholder="Enter Job title"
+          placeholder="Enter Job Position"
           value={newJobTitle}
           onChange={handleJobTitleChange}
         />
