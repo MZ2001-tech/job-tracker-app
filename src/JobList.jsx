@@ -12,6 +12,10 @@ function JobList() {
   const [newJobTitle, setNewJobTitle] = useState("")
   const [newStatus, setNewStatus] = useState("status")
 
+  const[editingIndex, setEditingIndex] = useState(null);
+  const[editedCompany, setEditedCompany] = useState("");
+  const[editedJobTitle, setEditedJobTitle] = useState("");
+
   function handleCompanyChange(e){
     SetNewCompany(e.target.value);
   }
@@ -37,7 +41,6 @@ function JobList() {
     SetNewCompany("");
     setNewJobTitle("");
     setNewStatus('status');
-
   }
 
   function deleteJob(index){
@@ -47,11 +50,28 @@ function JobList() {
   }
 
   function updateJobStatus(index, e){
+    if (newStatus === "status"){
+      alert("Status value cannot be (status)");
+      return
+    }
     const updatedJobs = [...jobs];
     updatedJobs[index].Status = e.target.value;
     setJobs(updatedJobs);
   }
 
+  function handleEdit(index){
+    setEditingIndex(index);
+    setEditedCompany(jobs[index].company);
+    setEditedJobTitle(jobs[index].jobTitle);
+  }
+
+  function handleSave(index){
+    const updatedJobs = [...jobs];
+    updatedJobs[index].company = editedCompany
+    updatedJobs[index].jobTitle = editedJobTitle
+    setJobs(updatedJobs);
+    setEditingIndex(null);
+  }
 
 
   return (
@@ -81,38 +101,65 @@ function JobList() {
           className="StatusDrop"
         >
           <option value="status">Status</option>
-          <option value="applied">applied</option>
+          <option value="applied">Applied</option>
           <option value="Rejected">Rejected</option>
           <option value="Ghosted">Ghosted</option>
           <option value="Online_Assesment">Online Assesment</option>
           <option value="Interview">Interview</option>
-          <option value="Offer">Recive offer Letter</option>
+          <option value="Offer">Recieve offer Letter</option>
           <option value="Accept">Accept Job</option>
           <option value="Reject">Reject Offer</option>
         </select>
 
         <button className="add-button" onClick={addJob}>
-          Add Job
+          +
         </button>
 
         <ol>
           {jobs.map((job, index) => (
             <li key={index}>
-              <span className="text"> 
-                {job.company} {job.jobTitle} 
-              </span>
+              {editingIndex === index?(
+                <>
+                  <input 
+                  type="text" 
+                  value ={editedCompany} 
+                  onChange={(e) => setEditedCompany(e.target.value)} 
+                  className="text"
+                />
+                <input 
+                type="text"
+                value={editedJobTitle}
+                onChange={(e) => setEditedJobTitle(e.target.value)}
+                className="text" 
+                />
+                <button
+                className="edit-button"
+                onClick={()=>handleSave(index)}>
+                   💾
+                </button>
+                </>):(
+                  <>
+                    <span className="Display-Box">{job.company}</span>
+                    <span className="Display-Box">{job.jobTitle}</span>
+                    <button
+                    className="edit-button"
+                    onClick={() => handleEdit(index)}>
+                      ✏️
+                    </button>
+                  </>
+                )}
               <span>
                 <select
                 value={job.Status}
                 onChange={(e) => updateJobStatus(index, e)}
                 className="StatusDisplay">
                   <option value="status">Status</option>
-                  <option value="applied">applied</option>
+                  <option value="applied">Applied</option>
                   <option value="Rejected">Rejected</option>
                   <option value="Ghosted">Ghosted</option>
                   <option value="Online_Assesment">Online Assesment</option>
                   <option value="Interview">Interview</option>
-                  <option value="Offer">Recive offer Letter</option>
+                  <option value="Offer">Recieve offer Letter</option>
                   <option value="Accept">Accept Job</option>
                     <option value="Reject">Reject Offer</option>
 
@@ -122,7 +169,7 @@ function JobList() {
                 className="delete-button"
                 onClick={() => deleteJob(index)}
               >
-                Delete Job
+                🗑️
               </button>
             </li>
           ))}
