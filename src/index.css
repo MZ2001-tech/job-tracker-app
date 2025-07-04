@@ -76,16 +76,22 @@ li{
     border: 3px solid rgb(13, 123, 191);
     display: flex;
     align-items: center;
-    margin-left:15%;  
-    margin-right: 15% ;
-    margin-top: 2.5% ;
-    
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 2.5%;
+    margin-left: 15%;  
+    margin-right: 15%;
 }
 .text{
     flex: 1;
     margin: 20px;
     text-align: center;
     border: 3px solid black;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    min-width: 100px;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .Job_input{
@@ -130,4 +136,63 @@ li{
     margin-right: 30px;
     text-align: center;
     background-color: rgb(124, 191, 233);
+}
+
+/* ====================== */
+/* 📱 MOBILE RESPONSIVENESS */
+/* ====================== */
+
+@media (max-width: 600px){
+    .JobCompanyList{
+        margin-top: 30px;
+        padding: 10px;
+    }
+
+      /* 💬 Flex column for mobile input section */
+      .InputSection{
+        display: flex;
+        flex-direction: column;
+        align-items:center ;
+        gap: 30px;
+      }
+
+     /* 💬 Full width input/select/buttons on small screen */
+
+     li{
+        flex-direction: column;
+        align-items: center;
+        margin-left: 5%;
+        margin-right: 5%;
+        padding: 15px;
+        gap: 15px;
+        
+
+     }
+
+     .Display-Box,
+     .StatusDisplay,
+     .edit-button,
+     .text{
+        width: 10% auto;
+        max-width: 320px;
+        margin: 8px, 0;
+     }
+
+    .edit-button,
+    .delete-button{
+        padding: 12px;
+    }
+
+    .delete-button{
+        margin-left: 0;
+    }
+
+    .edit-delete-container{
+        display: flex;
+        justify-content: space-between;
+        max-width: 300px;
+        gap:10px
+    }
+
+  
 }
