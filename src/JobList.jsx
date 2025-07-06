@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 
 function JobList() {
-  const [jobs, setJobs] =useState([
-    {company: "Petronas", jobTitle: "Data Analyst", Status: "status"},
-    {company: "Shell", jobTitle: "Software Engineer", Status: "status"},
-    {company: "SLB", jobTitle: "Data Engineer", Status: "status"},
-  ]); // array of object for easier input sychronization updates and readebility
+
+
+ const[jobs, setJobs] = useState([])
+
+  useEffect(() => {
+  document.title =`Job tracker`;
+  }, []);
+
+  useEffect(() => {
+    const savedJobs = localStorage.getItem("jobList");
+    if(savedJobs){
+      setJobs(JSON.parse(savedJobs));
+    }
+  }, [])
+
+  useEffect(() =>{
+    localStorage.setItem("jobList", JSON.stringify(jobs));
+  }, [jobs]);
 
   //Input States
   const [newCompany, SetNewCompany] = useState("");
