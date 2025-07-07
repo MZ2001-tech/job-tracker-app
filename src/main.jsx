@@ -11,7 +11,7 @@ const root = createRoot(container);
 
 // Initial render
 root.render(
-  <StrictMode>
+  
     <App />
-  </StrictMode>
+  
 );
